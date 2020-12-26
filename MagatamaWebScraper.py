@@ -43,17 +43,8 @@ def get_magatama_links(magatama_table):
     link_list = []
 
     for magatama in magatama_table.find_all('a'):
-        #print(type(magatama))
-        #print(magatama)
         link_list.append("https://megamitensei.fandom.com" + magatama.get('href'))
 
-        """
-        row_magatama_link = magatama.find_all('td')
-        if row_magatama_link is not None:
-            for individual_magatama_link in row_magatama_link:
-                individual_magatama_link = individual_magatama_link.find_all('a').get('href')
-                link_list.append(individual_magatama_link)
-        """
     for link in link_list:
         print(link)
     return link_list
@@ -64,15 +55,12 @@ def get_magatama_stats( link, dict ):
     name = parsed_html.select_one('h1[id="firstHeading"]').text
 
     #gets the stats as the 3 tables according to the 3 rows on the website
-    #stats = parsed_html.select_one('div[class="mw-parser-output"]').select_one('table[align="center"]').select('table[class="customtable"]')
     stats = parsed_html.select_one('table[style="min-width:650px;text-align:center; background: #222; border:2px solid #333158; border-radius:10px; font-size:75%; font-family:verdana;"]').select('table[class="customtable"]')
 
     if stats is None:
-        print("wait")
         stats = parsed_html.select_one('div[class="mw-parser-output"]').select_one('table[align="center"]').select('table')
 
     reg_skills = stats[0]
-    #print(reg_skills)
 
     effects = reg_skills.select('td[ style="background:#000;color:#fff"]')
 
